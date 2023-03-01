@@ -2,6 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Home from '../pages/Home';
 import AddOS from '../pages/AdicionarOS';
+import Steps from '../pages/Passos';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,13 @@ export default function Routes() {
         component={AddOS}
         options={{
           title: 'Adicionar OS',
+        }}
+      />
+      <Stack.Screen
+        name="Steps"
+        component={Steps}
+        options={{
+          title: 'Passos',
         }}
       />
     </Stack.Navigator>

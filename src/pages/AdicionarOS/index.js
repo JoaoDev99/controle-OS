@@ -3,15 +3,16 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
   TextInput,
   FlatList,
   StyleSheet,
   Button,
+  ScrollView,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DatePicker from 'react-native-date-picker';
+import { useNavigation } from "@react-navigation/native";
 
 const clients = [
   {name: 'Cineshow', id: '967'},
@@ -22,11 +23,15 @@ const clients = [
 export default function AdicionarOS() {
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
+  const navigation = useNavigation();
 
   const [search, setSearch] = useState('');
   const [clicked, setClicked] = useState(false);
   const [data, setData] = useState(clients);
   const [selectedClient, setSelectedClient] = useState('');
+
+  const [steps, setSteps] = useState([]);
+
   const searchRef = useRef();
   const onSearch = search => {
     if (search !== '') {
@@ -48,9 +53,7 @@ export default function AdicionarOS() {
           onPress={() => {
             setClicked(!clicked);
           }}>
-          <Text >
-            {selectedClient == '' ? 'Empresa' : selectedClient}
-          </Text>
+          <Text>{selectedClient == '' ? 'Empresa' : selectedClient}</Text>
           {clicked ? (
             <Icon name="arrow-drop-up" size={30} />
           ) : (
@@ -120,25 +123,31 @@ export default function AdicionarOS() {
         <Text style={styles.inputTitle}>Prazo:</Text>
         <TextInput style={styles.textInput} keyboardType="numeric" />
 
-        <Text style={styles.inputTitle}>Data inicial do pedido:</Text>
         
+
+        <Text style={styles.inputTitle}>Data inicial do pedido:</Text>
       </View>
       <View style={styles.containerDate}>
         <Button title="Selecione a data" onPress={() => setOpen(true)} />
-        </View>
-        <DatePicker
-          modal
-          open={open}
-          date={date}
-          mode={'date'}
-          onConfirm={date => {
-            setOpen(false);
-            setDate(date);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
+      </View>
+      <DatePicker
+        modal
+        open={open}
+        date={date}
+        mode={'date'}
+        onConfirm={date => {
+          setOpen(false);
+          setDate(date);
+        }}
+        onCancel={() => { 
+          setOpen(false);
+        }}
+      />
+      <TouchableOpacity style={styles.textInput} onPress={() => navigation.navigate("Steps")}>
+        <Text>
+          Seguir
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -146,7 +155,7 @@ export default function AdicionarOS() {
 const styles = StyleSheet.create({
   containerBackground: {
     backgroundColor: '#FAFAFA',
-   flex:1
+    flex: 1,
   },
   container: {
     backgroundColor: '#FAFAFA',
@@ -159,7 +168,7 @@ const styles = StyleSheet.create({
     paddingEnd: 14,
     paddingStart: 14,
     paddingTop: 10,
-    width: 200
+    width: 200,
   },
   containerOs: {
     borderWidth: 1,
@@ -173,6 +182,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
+  },
+  steps: {
+    borderWidth: 1,
+    borderColor: '#DFDFDF',
+    borderRadius: 10,
+    marginBottom: 14,
+    marginLeft: 10,
+    padding: 8,
+    paddingBottom: 14,
+    paddingTop: 14,
+    width: 100,
+    alignItems: 'center',
+  },
+  containerSteps: {
+    borderWidth: 1,
+    borderColor: '#DFDFDF',
+    borderRadius: 2,
+    marginBottom: 14,
+    padding: 8,
+    paddingBottom: 14,
+    paddingTop: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    flexWrap: 'wrap',
   },
   textInput: {
     borderWidth: 1,
@@ -189,9 +224,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 5,
   },
-  buttonDate:{
-    
-  },
+  buttonDate: {},
   containerAdd: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -238,7 +271,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     marginBottom: 15,
   },
-  inputTitle:{
-    color: '#696969'
-  }
+  inputTitle: {
+    color: '#696969',
+  },
 });
