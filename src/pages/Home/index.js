@@ -1,4 +1,5 @@
 import {useState, useContext} from 'react';
+import 'react-native-gesture-handler';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import OS from '../../components/OS';
@@ -30,7 +31,7 @@ export default function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.containerAdd}>
-        <Text style={styles.title}>Ordens de Serviço</Text>
+        <Text style={styles.title}>Ordens de Produção</Text>
         <Button/>
       </View>
 

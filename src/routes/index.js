@@ -1,14 +1,34 @@
+import 'react-native-gesture-handler';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 import Home from '../pages/Home';
 import AddOS from '../pages/AdicionarOS';
 import Steps from '../pages/Passos';
+import Auth from '../pages/Auth';
 
 const Stack = createNativeStackNavigator();
 
-export default function Routes() {
+const Drawer = createDrawerNavigator();
+
+function MyDrawer() {
+  return (
+    <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Screen name="Home" component={MyStack} />
+    </Drawer.Navigator>
+  );
+}
+
+function MyStack() {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Auth"
+        component={Auth}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="Home"
         component={Home}
@@ -20,7 +40,7 @@ export default function Routes() {
         name="AddOS"
         component={AddOS}
         options={{
-          title: 'Adicionar OS',
+          title: 'Adicionar OP',
         }}
       />
       <Stack.Screen
@@ -33,3 +53,5 @@ export default function Routes() {
     </Stack.Navigator>
   );
 }
+
+export default MyStack;
